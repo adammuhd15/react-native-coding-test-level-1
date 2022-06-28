@@ -1,7 +1,7 @@
 {
-    "favouriteColors": ["green", "pink", "blue"],
-    "countryName": "Japan",
-    "countryPopulation": 125712306,
-    "mightVisit": false,
-    "favouriteFoods": ["Nasi Lemak", "Lasagna", "Unagi"]
+    "favourite_colors": ["green", "pink", "blue"],
+    "country_name": "Japan",
+    "country_population": 125712306,
+    "might_visit": false,
+    "favourite_foods": ["Nasi Lemak", "Lasagna", "Unagi"]
 }
