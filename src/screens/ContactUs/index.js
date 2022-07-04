@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, Text, TouchableWithoutFeedback, Keyboard, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 // Local imports
@@ -19,6 +19,12 @@ const ContactUs = () => {
     const [formSubmitted, setFormSubmitted] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [popUpText, setPopUpText] = useState("")
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleOpenPicker = () => {
+        setIsOpen(!isOpen)
+    }
 
     const hanldeCloseModal = () => {
         setIsModalVisible(false);
@@ -57,8 +63,8 @@ const ContactUs = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAwareScrollView>
-            <View style={{ padding: 10 }}>
-                <View style={{ width: "100%", marginBottom: 30 }}>
+            <View style={screenStyle.viewContainer}>
+                <View style={screenStyle.fieldContainer}>
                     <TextField
                         onChangeText={handleChangeName}
                         value={formState.name}
@@ -66,42 +72,44 @@ const ContactUs = () => {
                         showLength
                         placeholder="Name..."
                         maxLength={50}
-                        style={{ width: "100%" }}
+                        style={screenStyle.fieldStyle}
                     />
                     {formSubmitted && !nameRegEx.test(formState.name) && (
-                        <Text style={{ color: "#FF0000" }}>Name must contain letters</Text>
+                        <Text style={screenStyle.textError}>Name must contain letters</Text>
                     )}
                     {formSubmitted && (formState.name.length > 50) && (
-                        <Text style={{ color: "#FF0000" }}>Name must be less than 50 characters</Text>
+                        <Text style={screenStyle.textError}>Name must be less than 50 characters</Text>
                     )}
                     {formSubmitted && !formState.name && (
-                        <Text style={{ color: "#FF0000" }}>Invalid name</Text>
+                        <Text style={screenStyle.textError}>Invalid name</Text>
                     )}
                 </View>
-                <View style={{ width: "100%", marginBottom: 30 }}>
+                <View style={screenStyle.fieldContainer}>
                     <TextField
                         onChangeText={handleChangeEmail}
                         value={formState.email}
                         label="Email"
                         placeholder="Email..."
-                        style={{ width: "100%" }}
+                        style={screenStyle.fieldStyle}
                     />
                     {formSubmitted && !emailRegEx.test(formState.email) && (
-                        <Text style={{ color: "#FF0000" }}>Invalid email address</Text>
+                        <Text style={screenStyle.textError}>Invalid email address</Text>
                     )}
                 </View>
-                <View style={{ width: "100%", marginBottom: 30 }}>
+                <View style={screenStyle.fieldContainer}>
                     <DatePicker
                         value={formState.birthDate}
                         onDateChange={handleChangeBirthDate}
                         maximumDate={new Date()}
                         label="Date of Birth"
+                        handleOpenPicker={handleOpenPicker}
+                        isOpen={isOpen}
                     />
                 </View>
                 <Button
                     text="Submit"
                     onPress={handleSubmit}
-                    containerStyle={{ width: "100%" }}
+                    containerStyle={screenStyle.fieldStyle}
                 />
                 <PopUp
                     isVisible={isModalVisible}
@@ -113,5 +121,21 @@ const ContactUs = () => {
         </TouchableWithoutFeedback>
     )
 }
+
+const screenStyle = StyleSheet.create({
+    viewContainer: {
+        padding: 10
+    },
+    fieldContainer: {
+        width: "100%",
+        marginBottom: 30
+    },
+    fieldStyle: {
+        width: "100%"
+    },
+    textError: {
+        color: "#FF0000"
+    }
+})
 
 export default ContactUs;
