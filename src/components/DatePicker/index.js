@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import PropTypes from "prop-types";
@@ -10,17 +10,15 @@ import { formatingDate } from "../../services/helper/MonthConverter";
 const DatePicker = ({
     label,
     value,
+    isOpen,
+    handleOpenPicker = () => null,
     onDateChange = async () => null,
     buttonStyle,
     ...restProps
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
     const handleInternalChoose = async (event, date) => {
         await onDateChange(event, date);
         handleOpenPicker();
-    }
-    const handleOpenPicker = () => {
-        setIsOpen(!isOpen)
     }
     return (
         <>
@@ -38,7 +36,7 @@ const DatePicker = ({
                     value={value}
                     onChange={handleInternalChoose}
                     maximumDate={new Date()}
-                    display="spinner"
+                    display="default"
                     {...restProps}
                 />
             }
@@ -49,7 +47,10 @@ const DatePicker = ({
 DatePicker.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
-    onDateChange: PropTypes.func
+    isOpen: PropTypes.bool,
+    handleOpenPicker: PropTypes.func,
+    onDateChange: PropTypes.func,
+    buttonStyle: PropTypes.object
 }
 
 const dateStyle = StyleSheet.create({

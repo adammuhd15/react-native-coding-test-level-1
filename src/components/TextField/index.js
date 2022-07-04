@@ -23,7 +23,7 @@ const TextField = ({
                 {...restProps}
             />
             {showLength && (
-                <Text style={{ textAlign: "right", color: value.length < 50 ? Colors.black : Colors.error }}>{value.length}/{maxLength}</Text>
+                <Text style={[textFieldStyle.lengthText, { color: value.length < 50 ? Colors.black : Colors.error }]}>{value.length}/{maxLength}</Text>
             )}
         </View>
     )
@@ -33,7 +33,8 @@ TextField.propTypes = {
     value: PropTypes.string,
     label: PropTypes.string,
     maxLength: PropTypes.number,
-    showLength: PropTypes.bool
+    showLength: PropTypes.bool,
+    style: PropTypes.object
 }
 
 const textFieldStyle = StyleSheet.create({
@@ -45,6 +46,9 @@ const textFieldStyle = StyleSheet.create({
         borderRadius: 5,
         padding: 5,
         backgroundColor: Colors.white
+    },
+    lengthText: {
+        textAlign: "right"
     }
 })
 
